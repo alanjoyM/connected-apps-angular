@@ -1,0 +1,31 @@
+.date_container {
+  float: right;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 13px;
+}
+
+.green {
+  &.mat-raised-button.mat-button-base {
+    background: green ;
+    color:#fff ;
+  }
+}
+.gray {
+  &.mat-raised-button.mat-button-base {
+    background: grey ;
+    color:white ;
+  }
+}
+::ng-deep .custom-style-succ{
+  background-color:green;
+  color:white;
+  margin-top: 100px !important;
+}
+::ng-deep .custom-style-fail{
+  background-color:red;
+  color:white;
+  margin-top: 100px !important;
+  button {background:red; color: white}
+}

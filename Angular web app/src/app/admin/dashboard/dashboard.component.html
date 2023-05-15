@@ -1,0 +1,209 @@
+<nav>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+    <li class="breadcrumb-item active">Dashboard</li>
+  </ol>
+</nav>
+
+<h2>Dashboard</h2>
+<div class="row" style="margin: 3px;">
+  <div class="col-lg-3 pb-3" style="background-color: #e9e6e6;">
+    <div class="row">
+      <div class="col-11 text-white text-center mx-2 rounded pt-2 pv-2 font-weight-bold"
+        style="background-color: #a39e9e;font-family:Times New Roman;">
+        {{Designation}}
+      </div>
+
+      <img class="userImage" src="../../assets/Alan.jpg">
+
+      <div class="col-12 text-center pt-2 pb-2 font-weight-bold" style="font-family: Tahoma;">
+        {{Username}}
+      </div>
+      <div class="col-12 text-center pt-2 pb-2" style="padding-top: 10px;font-family: Arial">
+        <b>TEAM SUMMARY</b>
+      </div>
+      <div class="col-12 mb-3">
+        <ul class="list-group">
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            NO. OF TEAM MEMBERS
+            <span class="badge badge-secondary badge-pill" align="right"
+              style="margin-left: 10px;">{{NoOfTeamMembers}}</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            TOTAL COST OF ALL PROJECTS
+            <span class="badge badge-secondary badge-pill" align="right" style="margin-left: 10px;">$
+              {{TotalCostOfAllProjects}} K</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            PENDING TASKS <span class="badge badge-secondary badge-pill" align="right"
+              style="margin-left: 10px;">{{PendingTasks}} / 90</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            UPCOMING PROJECTS <span class="badge badge-secondary badge-pill" align="right"
+              style="margin-left: 10px;">{{UpComingProjects}}</span>
+          </li>
+        </ul>
+      </div>
+      <div class="col-12 text-center pt-2 pb-2" style="font-family: Arial Narrow;">
+        CLIENTS
+      </div>
+      <div class="col-12">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item" *ngFor="let item of Clients">
+            {{item | slice: 0:10}}
+          </li>
+        </ul>
+
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <div class="row">
+      <div class="col-12 pt-0 pb-2" style="background-color: #e9e6e6;">
+        <div class="row mt-2">
+          <div class="col-4 text-left">
+            <mat-form-field appearance="fill">
+              <mat-label>Choose a project</mat-label>
+              <mat-select [(value)]="selectedProject">
+
+                <mat-option *ngFor="let item of Projects" [value]="item"  #matOption (click)="selectionChange(matOption)">{{item}}</mat-option>
+
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-4">
+            <mat-form-field appearance="fill">
+              <mat-label>Choose an year</mat-label>
+              <mat-select [(value)]="selectedYear">
+
+                <mat-option *ngFor="let year of Years" [value]="year">
+                  <span [ngSwitch]="year">
+                    <span *ngSwitchCase="'2016'" style="color:green">{{year}}</span>
+                    <span *ngSwitchCase="'2017'" style="color:red">{{year}}</span>
+                    <span *ngSwitchCase="'2018'" style="color:blue">{{year}}</span>
+                    <span *ngSwitchDefault style="color:black">{{year}}</span>
+                  </span>
+                </mat-option>
+
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="col-4 text-center">
+            <button mat-raised-button color="primary" (click)="addProject()">Add a Project</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-11 mx-auto mt-1 text-white text-center pt-2 pb-2 mx-auto rounded font-weight-bold"
+       style="background-color: #718d97; font-family: Arial Narrow;">
+       PROJECT BRIEFING
+      </div>
+      <div class="col-12">
+        <table class="table table-boarderless">
+          <tr>
+            <td>Project Cost</td>
+            <td>{{ProjectCost |currency:"CAD"}}</td>
+          </tr>
+          <tr>
+            <td>Current Expenditure</td>
+            <td>{{CurrentExpenditure |currency:"CAD"}}</td>
+          </tr>
+          <tr>
+            <td>Available Funds</td>
+            <td>{{AvailableFunds |currency:"CAD"}}</td>
+          </tr>
+        </table>
+      </div>
+      <div class="col-11 mx-auto mt-1 text-white text-center pt-2 pb-2 mx-auto rounded font-weight-bold"
+       style="background-color: #718d97; font-family: Arial Narrow;">
+       TEAM MEMBERS SUMMARY
+      </div>
+      <div class="col-12" style="margin-top: 10px;">
+        <mat-table [dataSource]="dataSourceSummary" class="mat-elevation-z8">
+          <!-- Region Column -->
+          <ng-container matColumnDef="region">
+            <mat-header-cell *matHeaderCellDef> Region </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.region}} </mat-cell>
+          </ng-container>
+
+          <!-- Count Column -->
+          <ng-container matColumnDef="count">
+            <mat-header-cell *matHeaderCellDef> Team Members Count </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.count}} </mat-cell>
+          </ng-container>
+
+          <!-- Unavailable members Column -->
+          <ng-container matColumnDef="unAvailCount">
+            <mat-header-cell *matHeaderCellDef>Temporarily unavailable members</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.unAvailCount}} </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-3">
+  <div class="row">
+    <div class="col-11 mx-auto mt-1 text-white text-center pt-2 pb-2 mx-auto rounded font-weight-bold"
+       style="background-color: #718d97; font-family: Arial Narrow;">
+       TEAM MEMBERS
+      </div>
+      <div class="col-12">
+        <mat-accordion>
+          <mat-expansion-panel *ngFor = "let element of newDataSource; let i =index" [expanded]="(i==0)?'true':'false'">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{element.region}}
+        </mat-panel-title>
+        <mat-panel-description>
+
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div *ngIf="i==0;then notAvailable; else Available">
+
+      </div>
+      <ng-template #notAvailable>
+<div [style.color]="'red'">
+  <p>
+DATA NOT AVAILABLE
+  </p>
+</div></ng-template>
+<ng-template #Available>
+  <div class="col-12"  style="margin-top: 3px;">
+    <mat-table [dataSource]="element.members" class="mat-elevation-z8">
+      <!-- ID Column -->
+      <ng-container matColumnDef="ID">
+        <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+      </ng-container>
+
+      <!-- NAME Column -->
+      <ng-container matColumnDef="NAME">
+        <mat-header-cell *matHeaderCellDef>NAME</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+      </ng-container>
+
+      <!-- Status Column -->
+      <ng-container matColumnDef="STATUS">
+        <mat-header-cell *matHeaderCellDef>STATUS</mat-header-cell>
+        <mat-cell *matCellDef="let element" [style.color]="(element.status=='Not Available')?'red':'green'"> {{element.status}} </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumsMembers"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumsMembers;"></mat-row>
+    </mat-table>
+   </div>
+</ng-template>
+
+
+    </mat-expansion-panel>
+
+        </mat-accordion>
+
+      </div>
+
+  </div>
+  </div>
+</div>

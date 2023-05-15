@@ -1,0 +1,130 @@
+<div class="form-container">
+
+<h2 mat-dialog-title align="center">Add Project Wizard</h2>
+<mat-dialog-content>
+
+<mat-grid-list cols="2" rowHeight="5:1.3">
+    <form [formGroup]="form">
+  <mat-grid-tile>
+    <mat-form-field appearance="outline" style="width: 95%;">
+      <mat-label>Project name</mat-label>
+      <input matInput placeholder="Enter Project name" formControlName="name" />
+      <mat-error *ngIf="form.get('name')?.hasError('required') && form.get('name')?.touched">
+Project name required
+      </mat-error>
+    </mat-form-field>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <mat-form-field appearance="outline" style="width: 95%;">
+      <mat-label>Project Status</mat-label>
+      <mat-select  formControlName="status" name="status">
+        <mat-option value="">Select</mat-option>
+        <mat-option *ngFor="let stat of projectStatuses" [value]="stat.codeName">
+          {{stat.name}}
+        </mat-option>
+      </mat-select>
+
+      <mat-error *ngIf="form.get('status')?.hasError('required') && form.get('status')?.touched">
+       Please select Project status
+              </mat-error>
+
+    </mat-form-field>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <mat-form-field appearance="outline" style="width: 95%;">
+      <mat-label>Project Manager</mat-label>
+      <input matInput placeholder="Enter manager name" formControlName="projectManager" />
+      <mat-error *ngIf="form.get('projectManager')?.hasError('required') && form.get('projectManager')?.touched">
+         Project manager name required
+               </mat-error>
+    </mat-form-field>
+
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <mat-form-field appearance="outline" style="width: 95%;">
+      <mat-label>No. of team members</mat-label>
+      <mat-select  formControlName="noOfTeamMembers">
+        <mat-option value="">Select</mat-option>
+        <mat-option *ngFor="let val of memberSelectArray" [value]=val>
+          {{val}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="form.get('noOfTeamMembers')?.hasError('required') && form.get('noOfTeamMembers')?.touched">
+        No. of team members is required
+               </mat-error>
+
+    </mat-form-field>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <mat-form-field appearance="outline" style="width: 95%;height: 100%;">
+      <mat-label>Creation Date</mat-label>
+      <div class="date_container">
+      <input matInput  [matDatepicker]="picker" [min]="minDate" [max]="maxDate" formControlName="createdOn" (dateChange)="dateChangeHandler($event.value)">
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker ></mat-datepicker>
+
+    </div>
+    <mat-error *ngIf="form.get('createdOn')?.hasError('invalidDOBYear')">
+      Please provide a valid date
+             </mat-error>
+             <mat-error *ngIf="form.get('createdOn')?.hasError('matDatepickerMin')">
+             Project creation date should be after {{getDateError(0)}}
+            </mat-error>
+            <mat-error *ngIf="form.get('createdOn')?.hasError('matDatepickerMax')">
+              Project creation date should be before {{getDateError(1)}}
+            </mat-error>
+
+    </mat-form-field>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <mat-form-field appearance="outline" style="width: 95%;height: 100%;">
+      <mat-label>Approved Fund</mat-label>
+      <input matInput  placeholder="Enter approved fund in CAD" formControlName="projectCost"/>
+      <mat-error *ngIf="form.get('projectCost')?.hasError('required') && form.get('projectCost')?.touched">
+        Enter Project cost
+               </mat-error>
+               <mat-error *ngIf="form.get('projectCost')?.hasError('pattern') && form.get('projectCost')?.touched" >
+                Must be a number
+                       </mat-error>
+    </mat-form-field>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <mat-form-field appearance="outline" style="width: 95%;height: 100%;">
+      <mat-label>Available funds</mat-label>
+      <input  matInput placeholder="Enter current available funds in CAD" formControlName="availableFunds"/>
+
+               <mat-error *ngIf="form.get('availableFunds')?.hasError('pattern')">
+                Must be a number
+                       </mat-error>
+
+    </mat-form-field>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <mat-form-field appearance="outline" style="width: 95%;height: 100%;">
+      <mat-label>Current Expenditure</mat-label>
+      <input matInput placeholder="Enter current expenditure in CAD" formControlName="currentExpenditure"/>
+      <mat-error  *ngIf="form.get('currentExpenditure')?.hasError('pattern')">
+        Must be a number
+               </mat-error>
+    </mat-form-field>
+  </mat-grid-tile>
+  </form>
+  <mat-grid-tile>
+    <mat-dialog-actions>
+      <button mat-raised-button (click)="dialogRefAddProject.close(false)" color="primary">
+        Close
+      </button>
+    </mat-dialog-actions>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <mat-dialog-actions>
+    <button mat-raised-button [ngClass]="{'gray': form.invalid, 'green' : !form.invalid}" type="submit" (click)="onSubmit(form)" >
+      Submit
+    </button>
+    </mat-dialog-actions>
+  </mat-grid-tile>
+</mat-grid-list>
+</mat-dialog-content>
+
+</div>

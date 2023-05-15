@@ -1,0 +1,21 @@
+.mat-grid-tile {
+    border: solid 2px rgb(148, 130, 130);
+}
+.userImage{
+    position: relative;
+    max-width: 45%;
+    max-height: 45%;
+    padding-top: 5%;
+    left: 28%;
+
+}
+.mat-header-cell {
+    flex-direction: column;
+    justify-content: center;
+  }
+.mat-cell {
+    text-align: center;
+    justify-content:center;
+  }
+
+

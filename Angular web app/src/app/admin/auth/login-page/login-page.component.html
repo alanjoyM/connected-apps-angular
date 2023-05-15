@@ -1,0 +1,157 @@
+<div class="background">
+
+  <div class="container">
+    <div class="tagline" style="align-self: center">
+
+      <!-- <span class="connected">Connected</span>
+    <span class="apps">Apps</span> -->
+      <img style="max-width: 200px;" src="../../../../assets/new_ca_logo.png">
+
+    </div>
+    <mat-card *ngIf="loginPage" class="mat-elevation-z0" style="width: 450px;height: 450px;">
+
+      <form class="loginForm" [formGroup]="loginForm" (ngSubmit)="login()">
+        <div class="w-100 text-center">
+          <mat-form-field class="loginInputFields" appearance="outline">
+            <mat-label>Username</mat-label>
+            <mat-icon matPrefix>person_outline</mat-icon>
+            <input autofocus type="text" matInput placeholder="Enter email address" formControlName="userEmail">
+            <mat-error *ngIf="userEmail.touched && userEmail.hasError('required')">Please enter your email</mat-error>
+            <mat-error *ngIf="userEmail.touched && userEmail.hasError('email')">Please enter valid email
+              address</mat-error>
+          </mat-form-field>
+        </div>
+
+<div class="w-100 text-center">
+  <mat-form-field class="loginInputFields" appearance="outline">
+    <mat-label>Password</mat-label>
+    <mat-icon matPrefix>lock_outline</mat-icon>
+    <input type="password" autocomplete="false" matInput placeholder="Password" formControlName="loginPassword">
+    <mat-error *ngIf="loginPassword.touched && loginPassword.hasError('required')">Password is
+      required</mat-error>
+  </mat-form-field>
+</div>
+
+
+        <div class="w-100 text-center">
+          <button type="submit" [disabled]="!loginForm.valid" class="loginSubmitButton" mat-raised-button>Login</button>
+        </div>
+
+
+        <!-- <div style="padding-top: 8%; width: 60%;">
+          <div style="display: flex;
+        justify-content: space-between;
+        align-items: center;">Don't have an account? <span><button class="toggle-signup" (click)="SignupClicked()"
+                mat-raised-button>SignUp</button></span> </div>
+
+        </div> -->
+
+        <div class="row" style="margin-top: 4%;">
+
+          <div class="col-6 my-auto text-right">
+           <p class="question-style"> Don't have an account?</p>
+          </div>
+          <div class="col-6 my-auto">
+             <button class="toggle-signup my-auto" (click)="SignupClicked()"
+              mat-raised-button>Sign Up</button>
+          </div>
+          </div>
+
+      </form>
+    </mat-card>
+
+    <mat-card *ngIf="signupPage" class="mat-elevation-z0" style="width: 450px;height: 550px;">
+      <form [formGroup]="signUpForm" (ngSubmit)="register()">
+        <div class="row">
+
+          <div class="parent-form-field" style="width: 50%;height: 50px;">
+            <mat-form-field class="loginInputFields" style="width: 90%;" appearance="outline">
+              <mat-label>First Name</mat-label>
+              <mat-icon matPrefix>person_outline</mat-icon>
+              <input autofocus type="text" matInput placeholder="Enter first name" formControlName="firstName">
+              <mat-error *ngIf="firstName.touched && firstName.hasError('required')">First Name required</mat-error>
+              <mat-error *ngIf="firstName.touched && firstName.hasError('pattern')">First Name should not contain
+                special characters</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="parent-form-field" style="width: 50%;height: 50px;">
+            <mat-form-field class="loginInputFields" style="width: 90%;" appearance="outline">
+              <mat-label>Last Name</mat-label>
+              <mat-icon matPrefix>person_outline</mat-icon>
+              <input autofocus type="text" matInput placeholder="Enter last name" formControlName="lastName">
+              <mat-error *ngIf="lastName.touched && lastName.hasError('required')">Last Name required</mat-error>
+              <mat-error *ngIf="lastName.touched && lastName.hasError('pattern')">Last Name should not contain special
+                characters</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row" style="margin-top:2%">
+          <div class="parent-form-field" style="width: 100%;">
+            <mat-form-field class="loginInputFields" style="width: 95%" appearance="outline">
+              <mat-label>Username</mat-label>
+              <mat-icon matPrefix>email</mat-icon>
+              <input autofocus type="text" matInput placeholder="Enter email address" formControlName="email">
+              <mat-error *ngIf="email.touched && email.hasError('required')">Email ID is required</mat-error>
+              <mat-error *ngIf="email.touched && email.hasError('email')">Please provide valid email</mat-error>
+            </mat-form-field>
+          </div>
+
+
+        </div>
+        <div class="row" style="margin-top:2%">
+          <div class="parent-form-field" style="width: 50%;height: 50px;">
+
+          <mat-form-field class="loginInputFields" style="width: 90%;" appearance="outline">
+            <mat-label>Password</mat-label>
+            <mat-icon matPrefix>lock_outline</mat-icon>
+            <input autofocus type="password" matInput placeholder="Enter password" formControlName="password">
+            <mat-error *ngIf="password.touched && password.hasError('required')">Password is required</mat-error>
+          </mat-form-field>
+</div>
+<div class="parent-form-field" style="width: 50%;height: 50px;">
+          <mat-form-field class="loginInputFields" style="width: 90%;" appearance="outline">
+            <mat-label>Password Again</mat-label>
+            <mat-icon matPrefix>lock_outline</mat-icon>
+            <input autofocus type="password" matInput placeholder="Enter password again"
+              formControlName="passwordConfirm">
+            <mat-error
+              *ngIf="this.signUpForm.get('passwordConfirm')?.touched && this.signUpForm.get('passwordConfirm')?.hasError('required')">Please
+              re-enter the password</mat-error>
+            <mat-hint style="color: red;"
+              *ngIf="this.signUpForm.get('passwordConfirm')?.dirty && this.signUpForm.hasError('passwordsNotMatching')">Password
+              not matching</mat-hint>
+          </mat-form-field>
+          </div>
+        </div>
+        <div class="row" style="margin-top: 3%;">
+          <button type="submit" [disabled]="!signUpForm.valid" class="signupSubmitButton"
+            mat-raised-button>Signup</button>
+        </div>
+        <!-- <div style="padding-top: 8%; width: 60%;">
+          <div style="display: flex;
+        justify-content: space-between;
+        align-items: center;">Have an account? <span><button class="toggle-signup" (click)="loginClicked()"
+                mat-raised-button>Login</button></span> </div>
+
+        </div> -->
+<div class="row" style="margin-top: 4%;">
+
+<div class="col-6 my-auto text-right">
+ <p class="question-style"> Have an account?</p>
+</div>
+<div class="col-6 my-auto">
+   <button class="toggle-signup my-auto" (click)="loginClicked()"
+    mat-raised-button>Login</button>
+</div>
+</div>
+
+      </form>
+
+
+    </mat-card>
+
+
+  </div>
+
+</div>
